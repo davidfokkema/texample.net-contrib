@@ -1,3 +1,10 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.pathmorphing,intersections}
+
+\begin{document}
+
 \begin{tikzpicture}[
  font=\sffamily,
  level/.style={black,thick},
@@ -95,3 +102,5 @@
 \draw[->,>=stealth',shorten >=2pt,name intersections={of=crossing and arrow}] (crosslabel) -- (intersection-1);
 
 \end{tikzpicture}
+
+\end{document}
