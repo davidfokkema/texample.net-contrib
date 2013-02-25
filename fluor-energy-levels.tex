@@ -3,8 +3,16 @@
 \usepackage{tikz}
 \usetikzlibrary{calc,arrows,decorations.pathmorphing,intersections}
 
+\usepackage[font={small,sf},labelfont={bf},labelsep=endash]{caption}
+\usepackage{sansmath}
+\DeclareCaptionFormat{thesis}{\sansmath #1#2#3}
+\captionsetup{format=thesis}
+
 \begin{document}
 
+\begin{figure}
+\centering
+\begin{sansmath}
 \begin{tikzpicture}[
  font=\sffamily,
  level/.style={black,thick},
@@ -31,11 +39,15 @@
 \coordinate (S22) at ($(S20) + 2*(sublevel)$);
 \coordinate (S30) at (0, 6);
 
+% Draw main levels
 \foreach \level/\text in {00/0, 10/1, 20/2, 30/3}
-    \draw[level] (S\level) node[left=20pt] {\itshape S$_\text$} node[left] {\footnotesize\itshape S$_{\level}$} -- +(4, 0);
+    \draw[level] (S\level) node[left=20pt] {$S_\text$} node[left]
+        {\footnotesize $S_{\level}$} -- +(4, 0);
 
+% Draw sublevels
 \foreach \sublevel in {01,02,03,11,12,13,21,22}
-    \draw[sublevel] (S\sublevel) node[left] {\footnotesize\itshape S$_{\sublevel}$} -- +(4, 0);
+    \draw[sublevel] (S\sublevel) node[left]
+        {\footnotesize $S_{\sublevel}$} -- +(4, 0);
 
 \node at (2, 6.5) {Singlet};
 
@@ -51,28 +63,37 @@
 \coordinate (T20) at (5, 5);
 \coordinate (T21) at ($(T20) + (sublevel)$);
 
+% Draw main levels
 \foreach \level/\text in {00/0, 10/1, 20/2}
-    \draw[level] (T\level) -- +(2, 0) node[right=20pt] {\itshape T$_\text$} node[right] {\footnotesize\itshape T$_{\level}$};
+    \draw[level] (T\level) -- +(2, 0)
+        node[right=20pt] {\itshape T$_\text$}
+        node[right] {\footnotesize\itshape T$_{\level}$};
 
+% Draw sublevels
 \foreach \sublevel in {01,02,11,12,13,21}
-    \draw[sublevel] (T\sublevel) -- +(2, 0) node[right] {\footnotesize\itshape T$_{\sublevel}$};
+    \draw[sublevel] (T\sublevel) -- +(2, 0) node[right]
+        {\footnotesize\itshape T$_{\sublevel}$};
 
 \node at (6, 6.5) {Triplet};
 
-% Ionization
+% Ionization level
 \draw[ionization] (0, 7.5) node[left=20pt] {$I_\pi$} -- +(7, 0);
 
 % Excitations
-\foreach \i/\from/\to in {1/S00/S10, 2/S00/S11, 3/S00/S12, 4/S00/S13, 5/S00/S20, 6/S00/S21, 7/S00/S22, 8/S00/S30}
+\foreach \i/\from/\to in {1/S00/S10, 2/S00/S11, 3/S00/S12, 4/S00/S13,
+                          5/S00/S20, 6/S00/S21, 7/S00/S22, 8/S00/S30}
     \draw[transition] ([xshift=\i*5pt] \from) -- ([xshift=\i*5pt] \to);
 
 % Radiative decay (fluorescence)
 \foreach \i/\from/\to in {1/S10/S00, 2/S10/S01, 3/S10/S02, 4/S10/S03}
-    \draw[radiative] ([xshift=(\i+9)*5pt] \from) -- ([xshift=(\i+9)*5pt] \to);
+    \draw[radiative] ([xshift=(\i+9)*5pt] \from) --
+        ([xshift=(\i+9)*5pt] \to);
 
-% Nonradiative decay
-\foreach \i/\from/\to in {1/S11/S10, 2/S12/S10, 3/S13/S10, 4/S20/S10, 5/S21/S10, 6/S22/S10, 7/S30/S10}
-    \draw[nonradiative] ([xshift=(\i+9)*5pt] \from) -- ([xshift=(\i+9)*5pt] \to);
+% Nonradiative decay (internal degradation)
+\foreach \i/\from/\to in {1/S11/S10, 2/S12/S10, 3/S13/S10, 4/S20/S10,
+                          5/S21/S10, 6/S22/S10, 7/S30/S10}
+    \draw[nonradiative] ([xshift=(\i+9)*5pt] \from) --
+        ([xshift=(\i+9)*5pt] \to);
 
 % Radiative decay (phosphorescence)
 \begin{scope}
@@ -83,24 +104,38 @@
     \coordinate (start) at ($(Tstart)!-\i*5pt!(end)$);
     \path[name path=trans] (start) -- (end);
     \path[name path=ground] \level -- +(5, 0);
-    \draw[indirectradiative,name intersections={of=trans and ground}] (start) --
-        (intersection-1); }
+    \draw[indirectradiative,name intersections={of=trans and ground}]
+        (start) -- (intersection-1); }
 \end{scope}
 
 % Labels
 \node[left] at (5pt, 1.5) {\footnotesize Absorption};
-\node[right,align=center] at (13*5pt, 2cm - 5pt) {\footnotesize Fluorescence\\\footnotesize (fast)};
-\node[right,align=center] at (5cm + 5pt, 1cm - 5pt) {
-    \footnotesize Phosphorescence\\\footnotesize (indirect, slow)};
-\node[right,fill=white,align=left] at ([xshift=12*5pt] S13) {\footnotesize Internal degradation};
+\node[right,align=center] at (13*5pt, 2cm - 5pt)
+    {\footnotesize Fluorescence\\\footnotesize (fast)};
+\node[right,align=center] at (5cm + 5pt, 1cm - 5pt)
+    {\footnotesize Phosphorescence\\\footnotesize (indirect, slow)};
+\node[right,fill=white,align=left] at ([xshift=12*5pt] S13)
+    {\footnotesize Internal degradation};
 
 % Intersystem crossing
-\draw[nonradiative,name path=crossing] ($(S10) + (4, 0) - (5pt, 0)$) -- ([xshift=5pt] T00);
+\draw[nonradiative,name path=crossing] ($(S10) + (4, 0) - (5pt, 0)$) --
+    ([xshift=5pt] T00);
 \coordinate (crosslabel) at (4.5, 3.1);
 \node[right,fill=white] at (crosslabel) {\footnotesize Intersystem crossing};
 \path[name path=arrow] (crosslabel) -- +(-145:1cm);
-\draw[->,>=stealth',shorten >=2pt,name intersections={of=crossing and arrow}] (crosslabel) -- (intersection-1);
-
+\draw[->,>=stealth',shorten >=2pt,
+      name intersections={of=crossing and arrow}]
+    (crosslabel) -- (intersection-1);
 \end{tikzpicture}
+\end{sansmath}
+
+\caption{Typical energy levels for $\pi$-orbitals of a fluor molecule.
+Spin singlet~($S$) and triplet~($T$) states are separated for clarity. The
+ionization level $I_\pi$ is shown at the top.  Excited states as well as
+vibrational sublevels (dashed horizontal lines) are shown.  Internal
+degradation is a non-radiative process, while fluorescence and
+phosphorescence are radiative decays.  The decay $T_0 \to S_0$, however,
+is indirect, by interactions with other molecules.}
+\end{figure}
 
 \end{document}
