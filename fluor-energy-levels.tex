@@ -66,13 +66,13 @@
 % Draw main levels
 \foreach \level/\text in {00/0, 10/1, 20/2}
     \draw[level] (T\level) -- +(2, 0)
-        node[right=20pt] {\itshape T$_\text$}
-        node[right] {\footnotesize\itshape T$_{\level}$};
+        node[right=20pt] {$T_\text$}
+        node[right] {\footnotesize $T_{\level}$};
 
 % Draw sublevels
 \foreach \sublevel in {01,02,11,12,13,21}
     \draw[sublevel] (T\sublevel) -- +(2, 0) node[right]
-        {\footnotesize\itshape T$_{\sublevel}$};
+        {\footnotesize $T_{\sublevel}$};
 
 \node at (6, 6.5) {Triplet};
 
@@ -96,6 +96,15 @@
         ([xshift=(\i+9)*5pt] \to);
 
 % Radiative decay (phosphorescence)
+%
+% There is some magic going on to prevent an irritating optical effect.
+% If the (start) coordinate is taken to be simply (Tstart), the wiggly
+% lines start at the T00 level.  Because of their differing lengths
+% however, the wiggles start to form a distracting pattern.  Therefore,
+% the lines are extended a bit (-\i*5pt) to show a pleasing effect.  They
+% are clipped so the transition still starts at T00.  If you want to
+% observe the optical effect, include this line at the correct location:
+%   \coordinate (start) at (Tstart);
 \begin{scope}
 \clip (S00) -- +(7, 0) |- (T00) -| (S00);
 \foreach \i/\level in {1/(S00), 2/(S01), 3/(S02), 4/(S03)} {
@@ -108,7 +117,7 @@
         (start) -- (intersection-1); }
 \end{scope}
 
-% Labels
+% Labels (curious coordinates are due to manual placement adjustments)
 \node[left] at (5pt, 1.5) {\footnotesize Absorption};
 \node[right,align=center] at (13*5pt, 2cm - 5pt)
     {\footnotesize Fluorescence\\\footnotesize (fast)};
