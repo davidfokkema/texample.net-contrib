@@ -1,3 +1,17 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{spy,arrows}
+
+\usepackage[font={small,sf},labelfont={bf},labelsep=endash]{caption}
+\usepackage{sansmath}
+\DeclareCaptionFormat{thesis}{\sansmath #1#2#3}
+\captionsetup{format=thesis}
+
+\usepackage{siunitx}
+
+\begin{document}
+
 \begin{sansmath}
 \begin{tikzpicture}
     [ x=.5mm, y=.5mm,
@@ -95,3 +109,5 @@
 
 \end{tikzpicture}
 \end{sansmath}
+
+\end{document}
