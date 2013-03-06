@@ -8,10 +8,18 @@
 \DeclareCaptionFormat{thesis}{\sansmath #1#2#3}
 \captionsetup{format=thesis}
 
+\usepackage{relsize}
+\usepackage{xspace}
 \usepackage{siunitx}
+
+\newcommand{\hisparc}{\textsmaller{HiSPARC}\xspace}
+\newcommand{\kascade}{\textsmaller{KASCADE}\xspace}
+
 
 \begin{document}
 
+\begin{figure}
+\centering
 \begin{sansmath}
 \begin{tikzpicture}
     [ x=.5mm, y=.5mm,
@@ -109,5 +117,15 @@
 
 \end{tikzpicture}
 \end{sansmath}
+\caption{Schematic layout of the \kascade experiment, including the \hisparc
+guest experiment.  Green: the calorimeter.  Light red: the muon tracker.
+Yellow: the sixteen array clusters.  Dark gray: the array detectors.  Light
+gray: the electronic huts.  Bright red: the four \hisparc detectors.  Pale blue:
+access roads.  The coordinate system used by \kascade is shown in gray.  For the
+present analysis, the \kascade $x, y$ coordinate system is used.  Azimuthal
+angles are between \SI{-180}{\degree} and \SI{180}{\degree} with the positive $x$-direction
+at \SI{0}{\degree}.  The positive $y$-direction points to
+\SI{15}{\degree}~North.}
+\end{figure}
 
 \end{document}
