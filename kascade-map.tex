@@ -3,24 +3,20 @@
 \usepackage{tikz}
 \usetikzlibrary{spy,arrows}
 
-\usepackage[font={small,sf},labelfont={bf},labelsep=endash]{caption}
-\usepackage{sansmath}
-\DeclareCaptionFormat{thesis}{\sansmath #1#2#3}
-\captionsetup{format=thesis}
+\usepackage[detect-all]{siunitx}
 
-\usepackage{relsize}
-\usepackage{xspace}
-\usepackage{siunitx}
 
-\newcommand{\hisparc}{\textsmaller{HiSPARC}\xspace}
-\newcommand{\kascade}{\textsmaller{KASCADE}\xspace}
+\newcommand{\hisparcbox}[1]{%
+    \path[hisparc,#1]
+        (-.4, .7) .. controls (0, .75) ..  (.4, .7) --
+        (.35, -1.7) ..  controls(0, -1.72) ..  (-.35, -1.7) -- cycle;
+}
 
 
 \begin{document}
 
 \begin{figure}
 \centering
-\begin{sansmath}
 \begin{tikzpicture}
     [ x=.5mm, y=.5mm,
       font={\sffamily},
@@ -36,12 +32,6 @@
       ruler/.style={gray,|<->|,>=stealth'},
       spy using outlines={red, circle, magnification=4, size=25 * 4, connect spies}
     ]
-    \def\hisparcbox{%
-        \path[hisparc]
-            (-.4, .7) .. controls (0, .75) ..  (.4, .7) --
-            (.35, -1.7) ..  controls(0, -1.72) ..  (-.35, -1.7) -- cycle;
-    }
-
     % Clusters
     \foreach \i in {-1.5, -0.5, ..., 1.5} {
         \foreach \j in {-1.5, -0.5, ..., 1.5} {
@@ -63,6 +53,7 @@
                 (-1.2, -1.2) rectangle (1.2, 1.2);
         }
     }
+    % Two detectors are slightly displaced
     \path[station, shift={(-6.5, 23.5)}] (-1.2, -1.2) rectangle (1.2, 1.2);
     \path[station, shift={(6.5, 23.5)}] (-1.2, -1.2) rectangle (1.2, 1.2);
 
@@ -82,50 +73,26 @@
     \path[tracker, shift={(0, 4)}] (-2.7, 32.5) rectangle (2.7, 70.5);
 
     % HiSPARC station
-    \begin{scope}[shift={(65.0, 15.05)}, rotate=180]
-        \hisparcbox
-    \end{scope}
-    \begin{scope}[hisparc, shift={(65.0, 20.82)}, rotate=180]
-        \hisparcbox
-    \end{scope}
-    \begin{scope}[hisparc, shift={(70.0, 23.71)}, rotate=-90]
-        \hisparcbox
-    \end{scope}
-    \begin{scope}[hisparc, shift={(60.0, 23.71)}, rotate=90]
-        \hisparcbox
-    \end{scope}
+    \hisparcbox{shift={(65.0, 15.05)}, rotate=180}
+    \hisparcbox{shift={(65.0, 20.82)}, rotate=180}
+    \hisparcbox{shift={(70.0, 23.71)}, rotate=-90}
+    \hisparcbox{shift={(60.0, 23.71)}, rotate=90}
     \path[hisparcgps, shift={(65.0, 23.71)}] (0, 0) circle (.3);
 
-    \draw[axis] (0, 0) -- (110, 0) node[right] {$x$};
-    \draw[axis] (0, 0) -- (0, 110) node[above] {$y$};
-    \node[axis,below left=-5pt] at (0, 0) {$O$};
-    \draw[ruler] (-97.5, -105) -- (97.5, -105) node[midway,below] {\SI{195}{\meter}};
-    \draw[ruler] (84.5, 105) -- (97.5, 105) node[midway,above] {\SI{13}{\meter}};
-    \draw[ruler] (-105, -97.5) -- (-105, 97.5) node[midway,above,sloped] {\SI{195}{\meter}};
-    \draw[ruler] (105, 84.5) -- (105, 97.5) node[midway,below,sloped] {\SI{13}{\meter}};
-
-    \def\r{40pt}
-    \newcommand{\calck}[1]{\pgfmathsetmacro{\k}{-#1 - 75 - 180}}
-    \begin{scope}[gray,shift={(-75,110)}]
-        \calck{0}
-        \draw[thick,double,->,>=stealth'] (0,0) -- (\k:\r);
-        \path (0,0) -- (\k:\r + 5pt) node[pos=1,rotate=-90,allow upside down,sloped] {$\mathcal{N}$};
-    \end{scope}
+    % Draw rulers
+    \draw[ruler] (-97.5, -105) -- (97.5, -105)
+        node[midway,below] {\SI{195}{\meter}};
+    \draw[ruler] (84.5, 105) -- (97.5, 105)
+        node[midway,above] {\SI{13}{\meter}};
+    \draw[ruler] (-105, -97.5) -- (-105, 97.5)
+        node[midway,above,sloped] {\SI{195}{\meter}};
+    \draw[ruler] (105, 84.5) -- (105, 97.5)
+        node[midway,below,sloped] {\SI{13}{\meter}};
 
     % Spy
     \spy on (65.0, 20.82) in node at (30, -50);
 
 \end{tikzpicture}
-\end{sansmath}
-\caption{Schematic layout of the \kascade experiment, including the \hisparc
-guest experiment.  Green: the calorimeter.  Light red: the muon tracker.
-Yellow: the sixteen array clusters.  Dark gray: the array detectors.  Light
-gray: the electronic huts.  Bright red: the four \hisparc detectors.  Pale blue:
-access roads.  The coordinate system used by \kascade is shown in gray.  For the
-present analysis, the \kascade $x, y$ coordinate system is used.  Azimuthal
-angles are between \SI{-180}{\degree} and \SI{180}{\degree} with the positive $x$-direction
-at \SI{0}{\degree}.  The positive $y$-direction points to
-\SI{15}{\degree}~North.}
 \end{figure}
 
 \end{document}
