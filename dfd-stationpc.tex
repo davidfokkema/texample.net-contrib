@@ -10,7 +10,9 @@
 \newcommand{\hisparc}{\textsmaller{HiSPARC}\xspace}
 \newcommand{\labview}{\textsmaller{LabVIEW}\xspace}
 
-% Defines a `datastore' shape for use in DFDs
+
+% Defines a `datastore' shape for use in DFDs.  This inherits from a
+% rectangle and only draws two horizontal lines.
 
 \makeatletter
 \pgfdeclareshape{datastore}{
@@ -37,6 +39,8 @@
  }
 }
 \makeatother
+
+
 \begin{document}
 
 \begin{figure}
@@ -51,28 +55,40 @@
  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
  every node/.style={align=center},
 ]
+
+% Position the nodes using a matrix layout
 \matrix{
-\node[source] (hisparcbox) {electronics}; \& \node[process] (daq) {DAQ};
-\&
-\\
-\& \node[datastore] (buffer) {buffer}; \& \\
-\node[datastore] (storage) {storage}; \& \node[process] (monitor) {monitor}; \& \node[sink] (datastore) {datastore}; \\
+  \node[source] (hisparcbox) {electronics};
+    \& \node[process] (daq) {DAQ}; \& \\
+
+  \& \node[datastore] (buffer) {buffer}; \& \\
+
+  \node[datastore] (storage) {storage};
+    \& \node[process] (monitor) {monitor};
+    \& \node[sink] (datastore) {datastore}; \\
 };
 
-\draw[to] (hisparcbox) -- node[midway,above] {raw events} node[midway,below] {level 0} (daq);
+% Draw the arrows between the nodes and label them.
+\draw[to] (hisparcbox) -- node[midway,above] {raw events}
+    node[midway,below] {level 0} (daq);
 \draw[to] (daq) -- node[midway,right] {raw event data\\level 1} (buffer);
-\draw[to] (buffer) -- node[midway,right] {raw event data\\level 1} (monitor);
-\draw[to] (monitor) to[bend right=50] node[midway,above] {events} node[midway,below] {level 1} (storage);
-\draw[to] (storage) to[bend right=50] node[midway,above] {events} node[midway,below] {level 1} (monitor);
-\draw[to] (monitor) -- node[midway,above] {events} node[midway,below] {level 1} (datastore);
+\draw[to] (buffer) --
+    node[midway,right] {raw event data\\level 1} (monitor);
+\draw[to] (monitor) to[bend right=50] node[midway,above] {events}
+    node[midway,below] {level 1} (storage);
+\draw[to] (storage) to[bend right=50] node[midway,above] {events}
+    node[midway,below] {level 1} (monitor);
+\draw[to] (monitor) -- node[midway,above] {events}
+    node[midway,below] {level 1} (datastore);
 \end{tikzpicture}
-\caption{Data flow diagram of a \hisparc station PC.  A \labview
-program communicates with the \hisparc II electronics.  Data is
-sanitized and, along with preliminary analysis results and configuration
-settings, sent to the \emph{buffer}.  The monitor program retrieves raw event
-data from the buffer and creates structured array data.  The events are then stored in
-the \emph{storage}.  When a batch of events is ready, it is retrieved from
-the storage and uploaded over the internet to the datastore.}
+
+\caption{Data flow diagram of a \hisparc station PC.  A \labview program
+communicates with the \hisparc II electronics.  Data is sanitized and,
+along with preliminary analysis results and configuration settings, sent
+to the \emph{buffer}.  The monitor program retrieves raw event data from
+the buffer and creates structured array data.  The events are then stored
+in the \emph{storage}.  When a batch of events is ready, it is retrieved
+from the storage and uploaded over the internet to the datastore.}
 \end{figure}
 
 \end{document}
