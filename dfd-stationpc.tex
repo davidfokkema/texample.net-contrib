@@ -1,3 +1,23 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.pathmorphing,intersections}
+
+\usepackage[font={small,sf},labelfont={bf},labelsep=endash]{caption}
+\usepackage{sansmath}
+\DeclareCaptionFormat{thesis}{\sansmath #1#2#3}
+\captionsetup{format=thesis}
+\usepackage{relsize}
+\usepackage{xspace}
+
+\usepackage{shape-datastore}
+
+\newcommand{\hisparc}{\textsmaller{HiSPARC}\xspace}
+\newcommand{\labview}{\textsmaller{LabVIEW}\xspace}
+
+\begin{document}
+
+\begin{figure}
 \begin{tikzpicture}
 [font=\sffamily,
  every matrix/.style={ampersand replacement=\&,column sep=2cm,row sep=2cm},
@@ -24,3 +44,13 @@
 \draw[to] (storage) to[bend right=50] node[midway,above] {events} node[midway,below] {level 1} (monitor);
 \draw[to] (monitor) -- node[midway,above] {events} node[midway,below] {level 1} (datastore);
 \end{tikzpicture}
+\caption{Data flow diagram of a \hisparc station PC.  A \labview
+program communicates with the \hisparc II electronics.  Data is
+sanitized and, along with preliminary analysis results and configuration
+settings, sent to the \emph{buffer}.  The monitor program retrieves raw event
+data from the buffer and creates structured array data.  The events are then stored in
+the \emph{storage}.  When a batch of events is ready, it is retrieved from
+the storage and uploaded over the internet to the datastore.}
+\end{figure}
+
+\end{document}
