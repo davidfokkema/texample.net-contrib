@@ -11,3 +11,12 @@ in my version is a bit complex, mainly due to manual layout tweaks,
 shifting some positions here and there.  The figure shown here is a minor
 revision of the one included in [my PhD
 thesis](http://dx.doi.org/10.3990/1.9789036534383).
+
+
+Data Flow Diagram (DFD)
+=======================
+
+Data flow diagrams depict the flow of information in a system.  This
+figure shows experimental data being recorded, processed and ultimately
+stored. This figure is a minor revision of the one included in [my PhD
+thesis](http://dx.doi.org/10.3990/1.9789036534383).
