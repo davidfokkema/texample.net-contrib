@@ -37,27 +37,31 @@
 \coordinate (A') at (\incidentangle+\angleindrop:\r);
 \coordinate (A'') at (\incidentangle+2*\angleindrop:\r);
 
-\draw[ray] (A) -- (A  -| \r*3, 0);
+\draw (O) circle (\r);
+\draw[fill] (O) circle (1.5pt);
+\draw[ray] (A  -| \r*3, 0) -- (A);
+\draw (O) -- ($(O)!1.5!(A)$) node[pos=1.05] {$n$};
+\drawlabeledarcdelta{(A)}{0}{\incidentangle}{\arcradius+1pt}{$i$}{\arclabelradius}
+\drawarcdelta{(A)}{0}{\incidentangle}{\arcradius-1pt}
+
+\begin{scope}[red,opacity=.5]
+
 \draw[ray] (A) -- (A');
 \draw[ray] (A') -- (A'');
 \draw[ray] (A'') -- ($(A'')+(2*\incidentangle+2*\angleindrop:2*\r)$);
 
-\draw (O) circle (\r);
 
-\draw[fill] (O) circle (1.5pt);
+\draw (O) -- ($(O)!1.5!(A')$) node[pos=1.05] {$n$};
+\draw (O) -- ($(O)!1.5!(A'')$) node[pos=1.05] {$n$};
 
-\draw[gray] (O) -- ($(O)!1.5!(A)$) node[pos=1.05] {$n$};
-\draw[gray] (O) -- ($(O)!1.5!(A')$) node[pos=1.05] {$n$};
-\draw[gray] (O) -- ($(O)!1.5!(A'')$) node[pos=1.05] {$n$};
-
-\drawlabeledarcdelta{(A)}{0}{\incidentangle}{\arcradius+1pt}{$i$}{\arclabelradius}
-\drawarcdelta{(A)}{0}{\incidentangle}{\arcradius-1pt}
 \drawlabeledarcdelta{(A)}{\incidentangle+180}{-\refractedangle}{\arcradius}{$r$}{\arclabelradius}
 \drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{\refractedangle}{\arcradius}
 \drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{-\refractedangle}{\arcradius}
 \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop+180}{\refractedangle}{\arcradius}
 \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius-1pt}
 \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius+1pt}
+
+\end{scope}
 
 \end{tikzpicture}
 
