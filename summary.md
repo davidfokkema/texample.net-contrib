@@ -32,3 +32,22 @@ including LOPES, TAUWER and HiSPARC, until early 2013.  This map shows the
 layout of KASCADE and the location of the HiSPARC station.  This figure is
 a minor revision of the one included in [my PhD
 thesis](http://dx.doi.org/10.3990/1.9789036534383).
+
+
+Rainbow formation
+=================
+
+Rainbows form because light of different colors refracts differently in a
+drop of water.  To understand a rainbow in detail, you need to consider
+all possible rays entering the drop, many raindrops at once, and the
+reflectivity for various angles at the back of the drop.  The current
+figure shows only one ray entering the raindrop and visualizes the path of
+the red and blue rays.  The index of refraction of the red ray is slightly
+exaggerated (less than one percent) for clarity.  Observe that the angle
+of incidence is identical to the angle with which the rays finally exit
+the drop.  Furthermore, the *red* internal angles are all identical,
+similar for the *blue* angles.
+
+This figure was drawn for high school students because a physics textbook
+figure contained several errors and ultimately claimed the red and blue
+light exiting the raindrop as parallel rays.
