@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\title{Rainbow}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,decorations.markings,arrows}
+
+\newcommand{\drawarcdelta}[4]{
+  \draw ($#1+(#2:#4)$) arc[start angle=#2, delta angle=#3, radius=#4];
+}
+
+\newcommand{\drawlabeledarcdelta}[6]{
+  \drawarcdelta{#1}{#2}{#3}{#4}
+  \node at ($#1+(#2+#3/2:#6)$) {#5};
+}
+
+
+\begin{document}
+
+\begin{tikzpicture}[xscale=-1,
+    ray/.style={decoration={markings,mark=at position .5 with {\arrow[>=latex]{>}}},postaction=decorate}]
+
+\pgfmathsetmacro{\f}{.7}
+\pgfmathsetlengthmacro{\r}{3cm}
+\pgfmathsetmacro{\index}{1.333}
+
+\pgfmathsetlengthmacro{\arcradius}{.8cm}
+\pgfmathsetlengthmacro{\dotradius}{.6cm}
+\pgfmathsetlengthmacro{\arclabelradius}{1cm}
+
+\pgfmathsetmacro{\incidentangle}{asin(\f)}
+\pgfmathsetmacro{\refractedangle}{asin(sin(\incidentangle) / \index)}
+\pgfmathsetmacro{\angleindrop}{180 - 2*\refractedangle}
+
+\coordinate (O) at (0, 0);
+\coordinate (A) at (\incidentangle:\r);
+\coordinate (A') at (\incidentangle+\angleindrop:\r);
+\coordinate (A'') at (\incidentangle+2*\angleindrop:\r);
+
+\draw[ray] (A) -- (A  -| \r*3, 0);
+\draw[ray] (A) -- (A');
+\draw[ray] (A') -- (A'');
+\draw[ray] (A'') -- ($(A'')+(2*\incidentangle+2*\angleindrop:2*\r)$);
+
+\draw (O) circle (\r);
+
+\draw[fill] (O) circle (1.5pt);
+
+\draw[gray] (O) -- ($(O)!1.5!(A)$) node[pos=1.05] {$n$};
+\draw[gray] (O) -- ($(O)!1.5!(A')$) node[pos=1.05] {$n$};
+\draw[gray] (O) -- ($(O)!1.5!(A'')$) node[pos=1.05] {$n$};
+
+\drawlabeledarcdelta{(A)}{0}{\incidentangle}{\arcradius+1pt}{$i$}{\arclabelradius}
+\drawarcdelta{(A)}{0}{\incidentangle}{\arcradius-1pt}
+\drawlabeledarcdelta{(A)}{\incidentangle+180}{-\refractedangle}{\arcradius}{$r$}{\arclabelradius}
+\drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{\refractedangle}{\arcradius}
+\drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{-\refractedangle}{\arcradius}
+\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop+180}{\refractedangle}{\arcradius}
+\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius-1pt}
+\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius+1pt}
+
+\end{tikzpicture}
+
+\end{document}
