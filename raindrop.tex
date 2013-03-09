@@ -3,7 +3,7 @@
 \title{Rainbow}
 
 \usepackage{tikz}
-\usetikzlibrary{calc,intersections,decorations.markings,arrows}
+\usetikzlibrary{calc,intersections,decorations.markings,arrows,scopes}
 
 \newcommand{\drawarcdelta}[4]{
   \draw ($#1+(#2:#4)$) arc[start angle=#2, delta angle=#3, radius=#4];
@@ -22,20 +22,15 @@
 
 \pgfmathsetmacro{\f}{.7}
 \pgfmathsetlengthmacro{\r}{3cm}
-\pgfmathsetmacro{\index}{1.333}
 
 \pgfmathsetlengthmacro{\arcradius}{.8cm}
 \pgfmathsetlengthmacro{\dotradius}{.6cm}
 \pgfmathsetlengthmacro{\arclabelradius}{1cm}
 
 \pgfmathsetmacro{\incidentangle}{asin(\f)}
-\pgfmathsetmacro{\refractedangle}{asin(sin(\incidentangle) / \index)}
-\pgfmathsetmacro{\angleindrop}{180 - 2*\refractedangle}
 
 \coordinate (O) at (0, 0);
 \coordinate (A) at (\incidentangle:\r);
-\coordinate (A') at (\incidentangle+\angleindrop:\r);
-\coordinate (A'') at (\incidentangle+2*\angleindrop:\r);
 
 \draw (O) circle (\r);
 \draw[fill] (O) circle (1.5pt);
@@ -44,24 +39,33 @@
 \drawlabeledarcdelta{(A)}{0}{\incidentangle}{\arcradius+1pt}{$i$}{\arclabelradius}
 \drawarcdelta{(A)}{0}{\incidentangle}{\arcradius-1pt}
 
-\begin{scope}[red,opacity=.5]
+\foreach \index/\color in {1.33/red, 1.34/blue} {
 
-\draw[ray] (A) -- (A');
-\draw[ray] (A') -- (A'');
-\draw[ray] (A'') -- ($(A'')+(2*\incidentangle+2*\angleindrop:2*\r)$);
+    \pgfmathsetmacro{\refractedangle}{asin(sin(\incidentangle) / \index)}
+    \pgfmathsetmacro{\angleindrop}{180 - 2*\refractedangle}
+
+    \coordinate (A') at (\incidentangle+\angleindrop:\r);
+    \coordinate (A'') at (\incidentangle+2*\angleindrop:\r);
+
+\begin{scope}[opacity=.5, color=\color]
+    \draw[ray] (A) -- (A');
+    \draw[ray] (A') -- (A'');
+    \draw[ray] (A'') -- ($(A'')+(2*\incidentangle+2*\angleindrop:2*\r)$);
 
 
-\draw (O) -- ($(O)!1.5!(A')$) node[pos=1.05] {$n$};
-\draw (O) -- ($(O)!1.5!(A'')$) node[pos=1.05] {$n$};
+    \draw (O) -- ($(O)!1.5!(A')$) node[pos=1.05] {$n$};
+    \draw (O) -- ($(O)!1.5!(A'')$) node[pos=1.05] {$n$};
 
-\drawlabeledarcdelta{(A)}{\incidentangle+180}{-\refractedangle}{\arcradius}{$r$}{\arclabelradius}
-\drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{\refractedangle}{\arcradius}
-\drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{-\refractedangle}{\arcradius}
-\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop+180}{\refractedangle}{\arcradius}
-\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius-1pt}
-\drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius+1pt}
+    \drawlabeledarcdelta{(A)}{\incidentangle+180}{-\refractedangle}{\arcradius}{$r$}{\arclabelradius}
+    \drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{\refractedangle}{\arcradius}
+    \drawarcdelta{(A')}{\incidentangle+\angleindrop+180}{-\refractedangle}{\arcradius}
+    \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop+180}{\refractedangle}{\arcradius}
 
 \end{scope}
+
+    \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius-1pt}
+    \drawarcdelta{(A'')}{\incidentangle+2*\angleindrop}{\incidentangle}{\arcradius+1pt}
+}
 
 \end{tikzpicture}
 
