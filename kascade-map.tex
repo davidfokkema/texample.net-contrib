@@ -1,10 +1,9 @@
+% Map of a HiSPARC detector inside the KASCADE experiment
+% Author: David Fokkema
 \documentclass{article}
-
 \usepackage{tikz}
 \usetikzlibrary{spy,arrows}
-
 \usepackage[detect-all]{siunitx}
-
 
 \newcommand{\hisparcbox}[1]{%
     \path[hisparc,#1]
@@ -12,11 +11,8 @@
         (.35, -1.7) ..  controls(0, -1.72) ..  (-.35, -1.7) -- cycle;
 }
 
-
 \begin{document}
-
-\begin{figure}
-\centering
+\begin{center}
 \begin{tikzpicture}
     [ x=.5mm, y=.5mm,
       font={\sffamily},
@@ -30,7 +26,8 @@
       hisparcgps/.style={fill=red},
       axis/.style={gray,very thick,->,>=stealth'},
       ruler/.style={gray,|<->|,>=stealth'},
-      spy using outlines={red, circle, magnification=4, size=25 * 4, connect spies}
+      spy using outlines={red, circle, magnification=4, size=25 * 4,
+                          connect spies}
     ]
     % Clusters
     \foreach \i in {-1.5, -0.5, ..., 1.5} {
@@ -93,6 +90,5 @@
     \spy on (65.0, 20.82) in node at (30, -50);
 
 \end{tikzpicture}
-\end{figure}
-
+\end{center}
 \end{document}
