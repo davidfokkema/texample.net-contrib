@@ -1,5 +1,13 @@
+TeXample.net contributions
+==========================
+
+This repository contains my contributions to TeXample.net.  You can view
+them directly on
+http://www.texample.net/tikz/examples/author/david-fokkema/.
+
+
 Fluor energy levels
-===================
+-------------------
 
 In particle physics, the most important experimental problem is that of
 detecting particles.  A cheap and highly efficient solution is using
@@ -14,7 +22,7 @@ thesis](http://dx.doi.org/10.3990/1.9789036534383).
 
 
 Data Flow Diagram (DFD)
-=======================
+-----------------------
 
 Data flow diagrams depict the flow of information in a system.  This
 figure shows experimental data being recorded, processed and ultimately
@@ -23,7 +31,7 @@ thesis](http://dx.doi.org/10.3990/1.9789036534383).
 
 
 Map of a HiSPARC detector inside the KASCADE experiment
-=======================================================
+-------------------------------------------------------
 
 The KASCADE experiment is a 200 × 200 m array detecting cosmic rays.  It
 consists of 252 detector stations spaced 13 m apart and has taken data
@@ -35,7 +43,7 @@ thesis](http://dx.doi.org/10.3990/1.9789036534383).
 
 
 Rainbow formation
-=================
+-----------------
 
 Rainbows form because light of different colors refracts differently in a
 drop of water.  To understand a rainbow in detail, you need to consider
